@@ -89,30 +89,39 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-      <HeroSection />
+  <div className="min-h-screen bg-white">
+    <Navbar />
+    <HeroSection />
 
-      <FiltersBar
-        activeKey={activeChip}
-        onChange={(key) => setActiveChip(key as ChipKey)}
-        sort={sort}
-        onSortChange={setSort}
-      />
+    <FiltersBar
+      activeKey={activeChip}
+      onChange={(key) => setActiveChip(key as ChipKey)}
+      sort={sort}
+      onSortChange={setSort}
+    />
 
-      <main className="px-6 md:px-10 mt-6">
+    <main className="px-6 md:px-10 mt-6">
+      {loading ? (
+        <p className="text-center py-10 text-stone-500">Loading...</p>
+      ) : visibleProperties.length === 0 ? (
+        <p className="text-center py-10 text-stone-500">
+          No properties match this filter.
+        </p>
+      ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {visibleProperties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>
+      )}
 
-        <div className="flex justify-center py-10">
-          <button className="px-10 py-3 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-800 active:scale-95 transition">
-            Show more
-          </button>
-        </div>
-      </main>
-    </div>
-  );
+      <div className="flex justify-center py-10">
+        <button className="px-10 py-3 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-800 active:scale-95 transition">
+          Show more
+        </button>
+      </div>
+    </main>
+  </div>
+);
+
 }
